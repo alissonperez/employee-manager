@@ -1,10 +1,10 @@
 Employee Manager
 ==================
 
-An app to manage employess with:
+An app to manage employees with:
 
-- A Django Admin panel to manage employees' data
-- A read-only API to list all employees
+- A Django Admin panel to manage employees' data.
+- A read-only API to list all employees.
 
 Installation
 -------------
