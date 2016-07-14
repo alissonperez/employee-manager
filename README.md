@@ -31,6 +31,15 @@ Now, just run `make serve` and access:
 - http://localhost:8000/employee/ To see an employees list.
 - http://localhost:8000/admin/ To manage employees and departments (use **admin/admin** as user/password).
 
+Testing
+---------
+
+Just run:
+
+```shell
+$ make test
+```
+
 Development notes
 ------------------
 
