@@ -19,3 +19,9 @@ After virtual environment creation, install requirements:
 ```shell
 $ pip install -r requirements.txt
 ```
+
+To migrate and fill database with some data to test:
+
+```shell
+$ make setupdb
+```
