@@ -3,6 +3,8 @@ from unittest import mock
 from django.core.management import call_command
 from django.test import TestCase
 from django.contrib.auth import models as auth_models
+from django.test import Client
+from django.core.urlresolvers import reverse
 
 from hr import models, factories
 
@@ -53,3 +55,40 @@ class PopulateCommandTest(TestCase):
     def _run_command(self):
         with mock.patch('hr.management.commands.populate.Command._out_success'):
             call_command('populate')
+
+
+class EmployeesViewTest(TestCase):
+
+    def setUp(self):
+        # Creating some employees
+        self.employees = []
+
+        for _ in range(3):
+            self.employees.append(factories.EmployeeFactory())
+
+    def test_get_on_employees_list_returns_200(self):
+        c = Client()
+        response = c.get(reverse('employees'))
+        self.assertEqual(response.status_code, 200)
+
+    def test_get_on_employees_list_returns_empty_list(self):
+        models.Employee.objects.all().delete()
+
+        c = Client()
+        response = c.get(reverse('employees'))
+        self.assertEqual(response.json(), [])
+
+    def test_get_on_employees_list_returns_list_of_employees(self):
+        expected_result = []
+        for emp in self.employees:
+            expected_result.append(dict(
+                name=emp.name,
+                email=emp.email,
+                department=emp.department.name
+            ))
+
+        c = Client()
+        response = c.get(reverse('employees'))
+
+        self.assertEqual(len(response.json()), len(self.employees))
+        self.assertEqual(response.json(), expected_result)

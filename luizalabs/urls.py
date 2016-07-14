@@ -16,6 +16,9 @@ Including another URLconf
 from django.conf.urls import url
 from django.contrib import admin
 
+from hr import views as hr_views
+
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
+    url(r'^employee/', hr_views.employees, name='employees'),
 ]
